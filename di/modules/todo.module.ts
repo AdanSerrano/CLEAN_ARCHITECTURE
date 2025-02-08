@@ -12,6 +12,7 @@ import { updateTodoUseCase } from "@/infrastructure/use-cases/todos/update-todo.
 
 export function createTodosModules() {
     const todosModule = createModule();
+
     todosModule
         .bind(DI_SYMBOLS.ITodosRepository)
         .toClass(TodosRepository, [
@@ -60,6 +61,7 @@ export function createTodosModules() {
         .bind(DI_SYMBOLS.IUpdateTodoController)
         .toHigherOrderFunction(updateTodoController, [
             DI_SYMBOLS.IInstrumentationService,
+            DI_SYMBOLS.ITransactionManagerService,
             DI_SYMBOLS.IUpdateTodoUseCase,
         ]);
 
@@ -74,7 +76,8 @@ export function createTodosModules() {
         .bind(DI_SYMBOLS.IDeleteTodoController)
         .toHigherOrderFunction(deleteTodoController, [
             DI_SYMBOLS.IInstrumentationService,
-            DI_SYMBOLS.IGetAllTodosUseCase,
+            DI_SYMBOLS.ITransactionManagerService,
+            DI_SYMBOLS.IDeleteTodoUseCase
         ]);
 
 

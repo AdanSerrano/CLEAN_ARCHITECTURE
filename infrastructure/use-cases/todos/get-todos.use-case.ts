@@ -1,6 +1,6 @@
 import type { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
-import { ITodosRepository } from '@/src/application/repositories-interfaces/todos/todos.repository.interface';
-import { Todo } from '@/src/entities/models/todos.model';
+import { ITodosRepository } from '@/src/application/repositories-interfaces/todo/todo.repository.interface';
+import { Todo } from '@/src/entities/models/todo.model';
 
 export type IGetAllTodosUseCase = ReturnType<typeof getAllTodosUseCase>;
 

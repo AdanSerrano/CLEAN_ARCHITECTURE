@@ -1,10 +1,10 @@
-import { Todo, TodoInsert } from "@/src/entities/models/todos.model";
-import { Transaction, db } from "@/db/drizzle";
+import { Todo, TodoInsert } from "@/src/entities/models/todo.model";
 
 import { DatabaseOperationError } from "@/src/entities/errors/common";
 import { ICrashReporterService } from "@/src/application/services/crash-reporter.service.interface";
 import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
-import { ITodosRepository } from "@/src/application/repositories-interfaces/todos/todos.repository.interface";
+import { ITodosRepository } from "@/src/application/repositories-interfaces/todo/todo.repository.interface";
+import { db } from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 import { todos } from "@/db/schema";
 
@@ -33,10 +33,9 @@ export class TodosRepository implements ITodosRepository {
         );
     }
 
-    async createTodo(todo: TodoInsert, tx?: Transaction): Promise<Todo> {
-        const invoker = tx ?? db;
+    async createTodo(todo: TodoInsert): Promise<Todo> {
         try {
-            const query = invoker.insert(todos)
+            const query = db.insert(todos)
                 .values(todo)
                 .returning();
 
@@ -56,6 +55,7 @@ export class TodosRepository implements ITodosRepository {
             throw err;
         }
     }
+
 
     async getTodo(id: number): Promise<Todo | undefined> {
         try {
@@ -94,8 +94,12 @@ export class TodosRepository implements ITodosRepository {
         }
     }
 
-    async updateTodo(id: number, input: Partial<TodoInsert>): Promise<Todo> {
+    async updateTodo(input: Partial<Todo>, id?: number): Promise<Todo> {
         try {
+            if (!id) {
+                throw new DatabaseOperationError('ID is required for update');
+            }
+
             const query = db.update(todos)
                 .set(input)
                 .where(eq(todos.id, id))
@@ -118,10 +122,9 @@ export class TodosRepository implements ITodosRepository {
         }
     }
 
-    async deleteTodo(id: number, tx?: Transaction): Promise<void> {
-        const invoker = tx ?? db;
+    async deleteTodo(id: number): Promise<void> {
         try {
-            const query = invoker.delete(todos)
+            const query = db.delete(todos)
                 .where(eq(todos.id, id))
                 .returning();
 

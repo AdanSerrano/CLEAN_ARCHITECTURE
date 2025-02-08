@@ -1,9 +1,9 @@
+import { Todo, insertTodoSchema } from '@/src/entities/models/todo.model';
+
 import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
 import { ITransactionManagerService } from '@/src/application/services/transaction-manager.service.interface';
 import { IUpdateTodoUseCase } from '@/infrastructure/use-cases/todos/update-todo.use.case';
 import { InputParseError } from '@/src/entities/errors/common';
-import { Todo } from '@/src/entities/models/todos.model';
-import { z } from 'zod';
 
 function presenter(
     todo: Todo,
@@ -19,12 +19,6 @@ function presenter(
     );
 }
 
-const inputSchema = z.object({
-    todoId: z.number(),
-    text: z.string().min(4).optional(), // `text` opcional, pero mínimo 4 caracteres si se proporciona
-    done: z.boolean().optional(), // `done` opcional
-});
-
 export type IUpdateTodoController = ReturnType<typeof updateTodoController>;
 
 export const updateTodoController =
@@ -34,13 +28,13 @@ export const updateTodoController =
         updateTodoUseCase: IUpdateTodoUseCase
     ) =>
         async (
-            input: Partial<z.infer<typeof inputSchema>>
+            input: Partial<Todo>,
+            id?: number
         ): Promise<ReturnType<typeof presenter>> => {
             return await instrumentationService.startSpan(
                 { name: 'updateTodo Controller' },
                 async () => {
-                    // Validar el input con Zod
-                    const { data, error: inputParseError } = inputSchema.safeParse(input);
+                    const { data, error: inputParseError } = insertTodoSchema.safeParse(input);
 
                     if (inputParseError) {
                         throw new InputParseError('Invalid data', { cause: inputParseError });
@@ -50,19 +44,14 @@ export const updateTodoController =
                         throw new InputParseError('At least one field must be provided for update.');
                     }
 
-                    // Iniciar la transacción para actualizar el TODO
                     const updatedTodo = await instrumentationService.startSpan(
                         { name: 'Update Todo Transaction' },
                         async () =>
-                            transactionManagerService.startTransaction(async (tx) => {
+                            transactionManagerService.startTransaction(async () => {
                                 try {
-                                    return await updateTodoUseCase(
-                                        { todoId: data.todoId, text: data.text, done: data.done },
-                                        tx
-                                    );
+                                    return await updateTodoUseCase(data, id);
                                 } catch (err) {
                                     console.error('Rolling back!', err);
-                                    tx.rollback();
                                     throw err;
                                 }
                             })

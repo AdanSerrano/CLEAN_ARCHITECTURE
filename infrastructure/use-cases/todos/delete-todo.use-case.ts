@@ -1,8 +1,5 @@
 import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
-import { ITodosRepository } from "@/src/application/repositories-interfaces/todos/todos.repository.interface";
-import { ITransaction } from "@/src/entities/models/transaction.interface";
-import { NotFoundError } from "@/src/entities/errors/common";
-import { Todo } from "@/src/entities/models/todos.model";
+import { ITodosRepository } from "@/src/application/repositories-interfaces/todo/todo.repository.interface";
 
 export type IDeleteTodoUseCase = ReturnType<typeof deleteTodoUseCase>;
 
@@ -12,22 +9,12 @@ export const deleteTodoUseCase =
         todosRepository: ITodosRepository
     ) =>
         (
-            input: {
-                todoId: number;
-            },
-            tx?: ITransaction
-        ): Promise<Todo> => {
+            id?: number
+        ): Promise<any> => {
             return instrumentationService.startSpan(
                 { name: 'deleteTodo Use Case', op: 'function' },
                 async () => {
-                    const todo = await todosRepository.getTodo(input.todoId);
-
-                    if (!todo) {
-                        throw new NotFoundError('Todo does not exist');
-                    }
-                    await todosRepository.deleteTodo(todo.id, tx);
-
-                    return todo;
+                    await todosRepository.deleteTodo(id);
                 }
             );
         };

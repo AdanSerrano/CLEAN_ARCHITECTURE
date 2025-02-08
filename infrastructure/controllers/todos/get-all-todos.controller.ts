@@ -1,6 +1,6 @@
 import { IGetAllTodosUseCase } from '@/infrastructure/use-cases/todos/get-todos.use-case';
 import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
-import { Todo } from '@/src/entities/models/todos.model';
+import { Todo } from '@/src/entities/models/todo.model';
 
 function presenter(
     todos: Todo[],

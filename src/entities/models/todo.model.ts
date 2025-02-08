@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const selectTodoSchema = z.object({
-    id: z.number(),
+    id: z.number().optional(),
     text: z.string().min(1, { message: 'Por favor introducir al menos 1 caracter' }),
-    done: z.boolean(),
+    done: z.boolean().optional(),
 });
 export type Todo = z.infer<typeof selectTodoSchema>;
 

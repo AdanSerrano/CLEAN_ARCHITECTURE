@@ -6,7 +6,7 @@ import { IDeleteTodoUseCase } from "@/infrastructure/use-cases/todos/delete-todo
 import { IGetAllTodosController } from "@/infrastructure/controllers/todos/get-all-todos.controller";
 import { IGetAllTodosUseCase } from "@/infrastructure/use-cases/todos/get-todos.use-case";
 import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
-import { ITodosRepository } from "@/src/application/repositories-interfaces/todos/todos.repository.interface";
+import { ITodosRepository } from "@/src/application/repositories-interfaces/todo/todo.repository.interface";
 import { ITransactionManagerService } from "@/src/application/services/transaction-manager.service.interface";
 import { IUpdateTodoController } from "@/infrastructure/controllers/todos/update-todo.controller";
 import { IUpdateTodoUseCase } from "@/infrastructure/use-cases/todos/update-todo.use.case";
