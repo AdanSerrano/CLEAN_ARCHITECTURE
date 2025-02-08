@@ -3,11 +3,12 @@ import { TodosRepository } from "@/infrastructure/repositories/todos/todos.repos
 import { createModule } from "@evyweb/ioctopus";
 import { createTodoController } from "@/infrastructure/controllers/todos/create-todo.controller";
 import { createTodoUseCase } from "@/infrastructure/use-cases/todos/create.todo.use-case";
+import { deleteTodoController } from "@/infrastructure/controllers/todos/delete-todo.controller";
 import { deleteTodoUseCase } from "@/infrastructure/use-cases/todos/delete-todo.use-case";
 import { getAllTodosController } from "@/infrastructure/controllers/todos/get-all-todos.controller";
 import { getAllTodosUseCase } from "@/infrastructure/use-cases/todos/get-todos.use-case";
-import { toggleTodoController } from "@/infrastructure/controllers/todos/toogle-todo.controller";
-import { toggleTodoUseCase } from "@/infrastructure/use-cases/todos/toggle-todo.use-case";
+import { updateTodoController } from "@/infrastructure/controllers/todos/update-todo.controller";
+import { updateTodoUseCase } from "@/infrastructure/use-cases/todos/update-todo.use.case";
 
 export function createTodosModules() {
     const todosModule = createModule();
@@ -34,19 +35,18 @@ export function createTodosModules() {
         ]);
 
     todosModule
-        .bind(DI_SYMBOLS.IGetAllTodosUseCase)
-        .toHigherOrderFunction(getAllTodosUseCase, [
+        .bind(DI_SYMBOLS.IUpdateTodoUseCase)
+        .toHigherOrderFunction(updateTodoUseCase, [
             DI_SYMBOLS.IInstrumentationService,
             DI_SYMBOLS.ITodosRepository,
         ]);
 
     todosModule
-        .bind(DI_SYMBOLS.IToggleTodoUseCase)
-        .toHigherOrderFunction(toggleTodoUseCase, [
+        .bind(DI_SYMBOLS.IGetAllTodosUseCase)
+        .toHigherOrderFunction(getAllTodosUseCase, [
             DI_SYMBOLS.IInstrumentationService,
             DI_SYMBOLS.ITodosRepository,
         ]);
-
 
     todosModule
         .bind(DI_SYMBOLS.ICreateTodoController)
@@ -57,6 +57,13 @@ export function createTodosModules() {
         ]);
 
     todosModule
+        .bind(DI_SYMBOLS.IUpdateTodoController)
+        .toHigherOrderFunction(updateTodoController, [
+            DI_SYMBOLS.IInstrumentationService,
+            DI_SYMBOLS.IUpdateTodoUseCase,
+        ]);
+
+    todosModule
         .bind(DI_SYMBOLS.IGetAllTodosController)
         .toHigherOrderFunction(getAllTodosController, [
             DI_SYMBOLS.IInstrumentationService,
@@ -64,11 +71,12 @@ export function createTodosModules() {
         ]);
 
     todosModule
-        .bind(DI_SYMBOLS.IToggleTodoController)
-        .toHigherOrderFunction(toggleTodoController, [
+        .bind(DI_SYMBOLS.IDeleteTodoController)
+        .toHigherOrderFunction(deleteTodoController, [
             DI_SYMBOLS.IInstrumentationService,
-            DI_SYMBOLS.IToggleTodoUseCase,
+            DI_SYMBOLS.IGetAllTodosUseCase,
         ]);
+
 
     return todosModule;
 }

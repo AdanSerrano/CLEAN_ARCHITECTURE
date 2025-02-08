@@ -1,14 +1,15 @@
 import { ICrashReporterService } from "@/src/application/services/crash-reporter.service.interface";
 import { ICreateTodoController } from "@/infrastructure/controllers/todos/create-todo.controller";
 import { ICreatedTodoUseCase } from "@/infrastructure/use-cases/todos/create.todo.use-case";
+import { IDeleteTodoController } from "@/infrastructure/controllers/todos/delete-todo.controller";
 import { IDeleteTodoUseCase } from "@/infrastructure/use-cases/todos/delete-todo.use-case";
 import { IGetAllTodosController } from "@/infrastructure/controllers/todos/get-all-todos.controller";
 import { IGetAllTodosUseCase } from "@/infrastructure/use-cases/todos/get-todos.use-case";
 import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
 import { ITodosRepository } from "@/src/application/repositories-interfaces/todos/todos.repository.interface";
-import { IToggleTodoController } from "@/infrastructure/controllers/todos/toogle-todo.controller";
-import { IToggleTodoUseCase } from "@/infrastructure/use-cases/todos/toggle-todo.use-case";
 import { ITransactionManagerService } from "@/src/application/services/transaction-manager.service.interface";
+import { IUpdateTodoController } from "@/infrastructure/controllers/todos/update-todo.controller";
+import { IUpdateTodoUseCase } from "@/infrastructure/use-cases/todos/update-todo.use.case";
 
 export const DI_SYMBOLS = {
     // Services
@@ -23,13 +24,13 @@ export const DI_SYMBOLS = {
     ICreateTodoUseCase: Symbol.for('ICreateTodoUseCase'),
     IDeleteTodoUseCase: Symbol.for('IDeleteTodoUseCase'),
     IGetAllTodosUseCase: Symbol.for('IGetAllTodosUseCase'),
-    IToggleTodoUseCase: Symbol.for('IToggleTodoUseCase'),
-
+    IUpdateTodoUseCase: Symbol.for('IUpdateTodoUseCase'),
 
     // Controllers
     ICreateTodoController: Symbol.for('ICreateTodoController'),
     IGetAllTodosController: Symbol.for('IGetAllTodosController'),
-    IToggleTodoController: Symbol.for('IToggleTodoController'),
+    IDeleteTodoController: Symbol.for('IDeleteTodoController'),
+    IUpdateTodoController: Symbol.for('IUpdateTodoController'),
 }
 
 export interface DI_RETURN_TYPES {
@@ -40,17 +41,16 @@ export interface DI_RETURN_TYPES {
 
     // Respositories
     ITodosRepository: ITodosRepository;
+
     // Use Cases
     ICreateTodoUseCase: ICreatedTodoUseCase;
     IDeleteTodoUseCase: IDeleteTodoUseCase;
     IGetAllTodosUseCase: IGetAllTodosUseCase;
-    IToggleTodoUseCase: IToggleTodoUseCase;
-
-    // Use Case
-
+    IUpdateTodoUseCase: IUpdateTodoUseCase;
 
     // Controllers
     ICreateTodoController: ICreateTodoController;
     IGetAllTodosController: IGetAllTodosController;
-    IToggleTodoController: IToggleTodoController;
+    IDeleteTodoController: IDeleteTodoController;
+    IUpdateTodoController: IUpdateTodoController;
 }
