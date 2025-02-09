@@ -17,7 +17,7 @@ export const TodoDelete = ({ id }: TodoDeleteProps) => {
         setLoading(true);
         try {
             await deleteTodo(id);
-            toast.success("La tarea fue eliminada", {
+            toast.success("Exito", {
                 description: "Tu tarea ha sido eliminada exitosamente"
             });
         } catch (error) {

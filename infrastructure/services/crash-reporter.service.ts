@@ -4,7 +4,6 @@ import { ICrashReporterService } from '@/src/application/services/crash-reporter
 
 export class CrashReporterService implements ICrashReporterService {
     report(error: any): string {
-        console.error('CrashReporterService caught error:', error);
         return Sentry.captureException(error);
     }
 }

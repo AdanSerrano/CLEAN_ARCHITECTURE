@@ -1,14 +1,12 @@
-import { IDeleteTodoUseCase } from '@/infrastructure/use-cases/todos/delete-todo.use-case';
 import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
-import { ITransactionManagerService } from '@/src/application/services/transaction-manager.service.interface';
+import { ITodosRepository } from '@/src/application/repositories-interfaces/todo/todo.repository.interface';
 
 export type IDeleteTodoController = ReturnType<typeof deleteTodoController>;
 
 export const deleteTodoController =
     (
         instrumentationService: IInstrumentationService,
-        transactionManagerService: ITransactionManagerService,
-        deleteTodoUseCase: IDeleteTodoUseCase
+        todosRepository: ITodosRepository,
     ) =>
         async (
             id?: number
@@ -19,16 +17,15 @@ export const deleteTodoController =
 
                     const success = await instrumentationService.startSpan(
                         { name: 'Delete Todo Transaction' },
-                        async () =>
-                            transactionManagerService.startTransaction(async () => {
-                                try {
-                                    await deleteTodoUseCase(id!);
-                                    return true;
-                                } catch (err) {
-                                    console.error('Rolling back!', err);
-                                    return false;
-                                }
-                            })
+                        async () => {
+                            try {
+                                await todosRepository.deleteTodo(id!);
+                                return true;
+                            } catch (err) {
+                                console.error('Rolling back!', err);
+                                return false;
+                            }
+                        }
                     );
 
                     return { success };

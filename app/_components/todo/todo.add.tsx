@@ -51,6 +51,7 @@ export function CreateTodo() {
         <form onSubmit={handleSubmit} className="flex items-center w-full gap-2">
             <Input
                 ref={inputRef}
+                id='text'
                 name="text"
                 className="flex-1"
                 placeholder="Crea una tarea nueva..."

@@ -1,8 +1,7 @@
 import { Todo, insertTodoSchema } from '@/src/entities/models/todo.model';
 
 import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
-import { ITransactionManagerService } from '@/src/application/services/transaction-manager.service.interface';
-import { IUpdateTodoUseCase } from '@/infrastructure/use-cases/todos/update-todo.use.case';
+import { ITodosRepository } from '@/src/application/repositories-interfaces/todo/todo.repository.interface';
 import { InputParseError } from '@/src/entities/errors/common';
 
 function presenter(
@@ -24,8 +23,7 @@ export type IUpdateTodoController = ReturnType<typeof updateTodoController>;
 export const updateTodoController =
     (
         instrumentationService: IInstrumentationService,
-        transactionManagerService: ITransactionManagerService,
-        updateTodoUseCase: IUpdateTodoUseCase
+        todosRepository: ITodosRepository
     ) =>
         async (
             input: Partial<Todo>,
@@ -46,15 +44,14 @@ export const updateTodoController =
 
                     const updatedTodo = await instrumentationService.startSpan(
                         { name: 'Update Todo Transaction' },
-                        async () =>
-                            transactionManagerService.startTransaction(async () => {
-                                try {
-                                    return await updateTodoUseCase(data, id);
-                                } catch (err) {
-                                    console.error('Rolling back!', err);
-                                    throw err;
-                                }
-                            })
+                        async () => {
+                            try {
+                                return await todosRepository.updateTodo(data, id);
+                            } catch (err) {
+                                console.error('Rolling back!', err);
+                                throw err;
+                            }
+                        }
                     );
 
                     return presenter(updatedTodo, instrumentationService);

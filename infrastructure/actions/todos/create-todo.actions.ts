@@ -13,19 +13,10 @@ export async function createTodo(data: TodoInsert) {
         },
         async () => {
             try {
-                const createTodoController = getInjection(
-                    'ICreateTodoController'
-                );
-
-                const todoData: TodoInsert = {
-                    text: data.text,
-                    done: false
-                };
-
+                const createTodoController = getInjection('ICreateTodoController');
                 revalidatePath('/');
-                return await createTodoController(todoData);
+                return await createTodoController(data);
             } catch (err) {
-
                 const crashReporterService = getInjection('ICrashReporterService');
                 crashReporterService.report(err);
                 throw err;

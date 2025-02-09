@@ -1,5 +1,5 @@
-import { IGetAllTodosUseCase } from '@/infrastructure/use-cases/todos/get-todos.use-case';
 import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
+import { ITodosRepository } from '@/src/application/repositories-interfaces/todo/todo.repository.interface';
 import { Todo } from '@/src/entities/models/todo.model';
 
 function presenter(
@@ -24,7 +24,7 @@ export type IGetAllTodosController = ReturnType<
 export const getAllTodosController =
     (
         instrumentationService: IInstrumentationService,
-        getTodosForUserUseCase: IGetAllTodosUseCase
+        todosRepository: ITodosRepository
     ) =>
         async (
         ): Promise<ReturnType<typeof presenter>> => {
@@ -32,7 +32,7 @@ export const getAllTodosController =
                 { name: 'getTodosForUser Controller' },
                 async () => {
 
-                    const todos = await getTodosForUserUseCase();
+                    const todos = await todosRepository.getAllTodos();
 
                     return presenter(todos, instrumentationService);
                 }

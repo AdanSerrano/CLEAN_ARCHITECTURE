@@ -37,7 +37,7 @@ export const ModalTodoUpdate = ({ todo }: ModalTodoUpdateProps) => {
                 done: todo.done
             }, todo.id);
             setIsOpen(false);
-            toast.success("La tarea fue actualizada", {
+            toast.success("Exito", {
                 description: "Tu tarea ha sido actualizada exitosamente"
             });
         } catch (error) {
@@ -66,18 +66,14 @@ export const ModalTodoUpdate = ({ todo }: ModalTodoUpdateProps) => {
                         Realice cambios en su tarea aquí. Haga clic en guardar cuando haya terminado.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Input
-                            id="text"
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                            className="col-span-3"
-                            placeholder="Actualiza tu Tarea..."
-                            disabled={isloading}
-                        />
-                    </div>
-                </div>
+                <Input
+                    id="text"
+                    name="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Actualiza tu Tarea..."
+                    disabled={isloading}
+                />
                 <DialogFooter>
                     <Button
                         type="submit"
