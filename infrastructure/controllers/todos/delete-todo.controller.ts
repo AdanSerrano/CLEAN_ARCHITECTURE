@@ -1,5 +1,5 @@
-import { IInstrumentationService } from '@/src/application/services/instrumentation.service.interface';
-import { ITodosRepository } from '@/src/application/repositories-interfaces/todo/todo.repository.interface';
+import { IInstrumentationService } from '@/infrastructure/services-interface/instrumentation.service.interface';
+import { ITodosRepository } from '@/infrastructure/repositories-interface/todos/todo.repository.interface';
 
 export type IDeleteTodoController = ReturnType<typeof deleteTodoController>;
 

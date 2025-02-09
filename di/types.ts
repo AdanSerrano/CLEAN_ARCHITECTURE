@@ -1,9 +1,9 @@
-import { ICrashReporterService } from "@/src/application/services/crash-reporter.service.interface";
+import { ICrashReporterService } from "@/infrastructure/services-interface/crash-reporter.service.interface";
 import { ICreateTodoController } from "@/infrastructure/controllers/todos/create-todo.controller";
 import { IDeleteTodoController } from "@/infrastructure/controllers/todos/delete-todo.controller";
 import { IGetAllTodosController } from "@/infrastructure/controllers/todos/get-all-todos.controller";
-import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
-import { ITodosRepository } from "@/src/application/repositories-interfaces/todo/todo.repository.interface";
+import { IInstrumentationService } from "@/infrastructure/services-interface/instrumentation.service.interface";
+import { ITodosRepository } from "@/infrastructure/repositories-interface/todos/todo.repository.interface";
 import { IUpdateTodoController } from "@/infrastructure/controllers/todos/update-todo.controller";
 
 export const DI_SYMBOLS = {

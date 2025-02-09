@@ -1,6 +1,6 @@
 'use server'
 
-import { Todo } from "@/src/entities/models/todo.model";
+import { Todo } from "@/infrastructure/entities/models/todo.model";
 import { getInjection } from "@/di/container";
 import { revalidatePath } from "next/cache";
 

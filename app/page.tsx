@@ -1,5 +1,5 @@
 import { CreateTodo } from "./_components/todo/todo.add";
-import { Todo } from "@/src/entities/models/todo.model";
+import { Todo } from "@/infrastructure/entities/models/todo.model";
 import { Todos } from "./_components/todo/todos.list";
 import { getTodos } from "@/infrastructure/actions/todos/get-all-todo.actions";
 

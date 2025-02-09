@@ -1,9 +1,9 @@
-import { Todo, TodoInsert } from "@/src/entities/models/todo.model";
+import { Todo, TodoInsert } from "@/infrastructure/entities/models/todo.model";
 
-import { DatabaseOperationError } from "@/src/entities/errors/common";
-import { ICrashReporterService } from "@/src/application/services/crash-reporter.service.interface";
-import { IInstrumentationService } from "@/src/application/services/instrumentation.service.interface";
-import { ITodosRepository } from "@/src/application/repositories-interfaces/todo/todo.repository.interface";
+import { DatabaseOperationError } from "@/infrastructure/entities/errors/common";
+import { ICrashReporterService } from "@/infrastructure/services-interface/crash-reporter.service.interface";
+import { IInstrumentationService } from "@/infrastructure/services-interface/instrumentation.service.interface";
+import { ITodosRepository } from "@/infrastructure/repositories-interface/todos/todo.repository.interface";
 import { db } from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 import { todos } from "@/db/schema";

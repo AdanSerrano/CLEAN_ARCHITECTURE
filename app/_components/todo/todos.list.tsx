@@ -1,7 +1,7 @@
 'use client';
 
 import { ModalTodoUpdate } from './todo.update';
-import { Todo } from '@/src/entities/models/todo.model';
+import { Todo } from '@/infrastructure/entities/models/todo.model';
 import { TodoDelete } from './todo.delete';
 import { cn } from '../utils';
 

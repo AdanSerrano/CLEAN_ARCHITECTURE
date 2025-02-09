@@ -1,4 +1,4 @@
-import { Todo, TodoInsert } from "@/src/entities/models/todo.model";
+import { Todo, TodoInsert } from "@/infrastructure/entities/models/todo.model";
 
 export interface ITodosRepository {
     createTodo(todo: TodoInsert): Promise<Todo>;

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 
-import { ICrashReporterService } from '@/src/application/services/crash-reporter.service.interface';
+import { ICrashReporterService } from '@/infrastructure/services-interface/crash-reporter.service.interface';
 
 export class CrashReporterService implements ICrashReporterService {
     report(error: any): string {
